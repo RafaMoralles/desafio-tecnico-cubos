@@ -1,0 +1,190 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Cubos - Desafio-tecnico-backend",
+    "contact": {}
+  },
+  "host": "127.0.0.1:3333",
+  "basePath": "/",
+  "securityDefinitions": {},
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/rules": {
+      "get": {
+        "summary": "listar todas as regras",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "listartodasasregras",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "post": {
+        "summary": "criar uma regra",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "criarumaregra",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/criarumaregrarequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/rules/{id}": {
+      "delete": {
+        "summary": "deletar uma regra",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "deletarumaregra",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/appointments/01-01-2021/31-01-2021": {
+      "get": {
+        "summary": "listar os horários disponíveis",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "listaroshoráriosdisponíveis",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "criarumaregrarequest": {
+      "title": "criarumaregrarequest",
+      "example": {
+        "dateStart": "01-02-2021",
+        "dateEnd": "15-02-2021",
+        "intervals": [
+          {
+            "start": "08:30",
+            "end": "09:30"
+          }
+        ],
+        "daysOfWeek": [
+          5
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "dateStart": {
+          "type": "string"
+        },
+        "dateEnd": {
+          "type": "string"
+        },
+        "intervals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Interval"
+          }
+        },
+        "daysOfWeek": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "required": [
+        "dateStart",
+        "dateEnd",
+        "intervals",
+        "daysOfWeek"
+      ]
+    },
+    "Interval": {
+      "title": "Interval",
+      "example": {
+        "start": "08:30",
+        "end": "09:30"
+      },
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string"
+        },
+        "end": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "Misc",
+      "description": ""
+    }
+  ]
+}
