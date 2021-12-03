@@ -1,6 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Constants from 'App/Constants'
-import Appointment from 'App/Models/Appointment'
 import { AppointmentsContract } from 'Contracts/AppointmentContract'
 import Database from 'Database/DatabaseJson'
 import { DateTime } from 'luxon'
@@ -8,32 +7,37 @@ import { DateTime } from 'luxon'
 
 export default class AppointmentsController {
   public async index ({ params } : HttpContextContract) {
-    const dateStart = DateTime.fromFormat(params.dateStart, Constants.DATE_FORMAT)
+    let dateStart = DateTime.fromFormat(params.dateStart, Constants.DATE_FORMAT)
     const dateEnd = DateTime.fromFormat(params.dateEnd, Constants.DATE_FORMAT)
     
-    const appointments: Appointment[] = new Array ()
+    const appointments: AppointmentsContract[] = new Array ()
     const rules = Database.read()
-    for (const rule of rules) {
-      let start = rule.DateStart
-      const end = rule.DateEnd
 
-      if (rule.DateStart <= dateStart && rule.DateEnd >= dateEnd) {
-        while (start <= end) {
-          const dayHaveAppointment = rule.DaysOfWeek.some(day => day === Number(start.toFormat('c')))
-          if (dayHaveAppointment) {
-            appointments.push(new Appointment(start, rule.Intervals))
+    
+    while (dateStart <= dateEnd) {
+      const dayWeek = Number(dateStart.toFormat(Constants.DAY_WEEK_FORMAT))
+      let matchedRules: Array<{start: string, end: string}> = []
+      for (const rule of rules) {
+        if (rule.DaysOfWeek.length > 0) {
+          const matchRule = rule.DaysOfWeek.some(weekDay => weekDay === dayWeek)
+          if (matchRule) {
+            for (const intrevals of rule.Intervals) {
+              matchedRules.push(intrevals)
+            }
           }
-          start = start.plus({ days: 1 })
         }
       }
+      const filteredRules = rules.filter(rule => rule.Day.equals(dateStart))
+      for (const rule of filteredRules) {
+        for (const intrevals of rule.Intervals) {
+          matchedRules.push(intrevals)
+        }
+      }
+      if (matchedRules.length > 0) {
+        appointments.push({ day: dateStart.toFormat(Constants.DATE_FORMAT), intervals: matchedRules})
+      }
+      dateStart = dateStart.plus({ days: 1 })
     }
-    const appointmentsParsed: AppointmentsContract[] = []
-    for (const appointment of appointments) {
-      appointmentsParsed.push({
-        day: appointment.day.toFormat(Constants.DATE_FORMAT),
-        intervals: appointment.intervals
-      })
-    }
-    return appointmentsParsed
+    return appointments
   }
 }

@@ -4,19 +4,17 @@ import { v4 as uuid } from 'uuid'
 
 export default class Rule {
   private id: string
-  private dateStart: DateTime
-  private dateEnd: DateTime
+  private day: DateTime
   private daysOfWeek: Array<number>
   private intervals: Array<{ start: string, end: string}>
 
-  constructor (dateStart = '', dateEnd = '', intervals: Array<{ start: string, end: string}> =[], daysOfWeek: Array<number> = [], id: string = '') {
+  constructor (day: string = '', intervals: Array<{ start: string, end: string}> =[], daysOfWeek: Array<number> = [], id: string = '') {
     this.id = id === '' ? uuid() : id
-    this.dateStart = DateTime.fromFormat(dateStart, Constants.DATE_FORMAT)
-    this.dateEnd = DateTime.fromFormat(dateEnd, Constants.DATE_FORMAT)
+    this.day = day === '' ? DateTime.fromISO(Constants.DATE_TIME_INITIAL) : DateTime.fromFormat(day, Constants.DATE_FORMAT)
     this.intervals = intervals
     this.daysOfWeek = daysOfWeek
   } 
-  
+
   get Id(): string {
     return this.id
   }
@@ -24,18 +22,11 @@ export default class Rule {
     this.id = value
   }
 
-  get DateStart(): DateTime {
-    return this.dateStart
+  get Day(): DateTime {
+    return this.day
   }
-  set DateStart(value: DateTime) {
-    this.dateStart = value
-  }
-  
-  get DateEnd(): DateTime {
-    return this.dateEnd
-  }
-  set DateEnd(value: DateTime) {
-    this.dateEnd = value
+  set Day(value: DateTime) {
+    this.day = value
   }
   
   get Intervals(): Array<{ start: string, end: string}> {

@@ -61,7 +61,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"dateStart\": \"01-02-2021\",\r\n\t\"dateEnd\": \"15-02-2021\",\r\n\t\"intervals\": [\r\n\t\t{\r\n\t\t\t\"start\": \"08:30\", \r\n\t\t  \"end\": \"09:30\"\r\n\t\t}\r\n\t],\r\n\t\"daysOfWeek\": [5]\r\n}",
+					"raw": "{\r\n\t\"dateOrDaysOfWeek\": [1,2],\r\n\t\"intervals\": [\r\n\t\t{\r\n          \"start\": \"08:30\", \r\n\t\t  \"end\": \"09:30\"\r\n\t\t}\r\n\t]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

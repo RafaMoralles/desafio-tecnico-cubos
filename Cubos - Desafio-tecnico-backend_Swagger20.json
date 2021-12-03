@@ -119,45 +119,36 @@
     "criarumaregrarequest": {
       "title": "criarumaregrarequest",
       "example": {
-        "dateStart": "01-02-2021",
-        "dateEnd": "15-02-2021",
+        "dateOrDaysOfWeek": [
+          1,
+          2
+        ],
         "intervals": [
           {
             "start": "08:30",
             "end": "09:30"
           }
-        ],
-        "daysOfWeek": [
-          5
         ]
       },
       "type": "object",
       "properties": {
-        "dateStart": {
-          "type": "string"
-        },
-        "dateEnd": {
-          "type": "string"
+        "dateOrDaysOfWeek": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
         },
         "intervals": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Interval"
           }
-        },
-        "daysOfWeek": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          }
         }
       },
       "required": [
-        "dateStart",
-        "dateEnd",
-        "intervals",
-        "daysOfWeek"
+        "dateOrDaysOfWeek",
+        "intervals"
       ]
     },
     "Interval": {

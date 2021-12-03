@@ -81,39 +81,37 @@ Caso algo não ocorra como o esperado, existe o retorno padrão da api.
 
 **POST /rules**: Cadastra uma nova regra.
 
-* dateStart: String (Deve estar no padrão DD-MM-YYYY)
-* dateEnd: String (Deve estar no padrão DD-MM-YYYY)
+* dateOrDaysOfWeek: String (Deve estar no padrão DD-MM-YYYY) ou array de números (Representando os dias da semana. Começando em 1 - Segunda até 7 - Domingo.)
 * intervals: Array
-* daysOfWeek: Array (Representando os dias da semana. Começando em 1 - Segunda até 7 - Domingo.)
 
 **Request:**
 ```json
 {
-  "dateStart": "01-01-2021",
-  "dateEnd": "15-01-2021",
+  "dateOrDaysOfWeek": [1,2],
   "intervals": [
 	  {
 		  "start": "08:30", 
 		  "end": "09:30"
 	  }
-  ],
-  "daysOfWeek": [1,2,4]
+  ]
 }
 ```
 
 **Response:**
 ```json
 {
-  "id": "6b01dd23-dff3-43f7-a6f1-e63dc3f86a99",
-  "dateStart": "2021-01-01T00:00:00.000-03:00",
-  "dateEnd": "2021-01-15T00:00:00.000-03:00",
+  "id": "cf92beac-cd55-478d-96f0-c495fa5e002f",
+  "day": "1900-01-01T00:00:00.000-03:06",
   "intervals": [
     {
       "start": "08:30",
       "end": "09:30"
     }
   ],
-  "daysOfWeek": [1,2,4]
+  "daysOfWeek": [
+    1,
+    2
+  ]
 }
 ```
 
